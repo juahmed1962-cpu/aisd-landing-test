@@ -465,13 +465,16 @@
       </div>
       <h1>A Trusted English Medium School Where Every Child Learns, Grows, and Thrives.</h1>
       <p class="sub">Providing a safe, caring, and inspiring learning environment that helps every child build confidence, curiosity, and a strong academic foundation.</p>
+      <p style="font-size:14.5px; color:var(--muted); margin-top:6px;">Schedule a campus visit and speak with our Admissions Team. We usually respond within a few minutes during working hours.</p>
       <div class="cta-row">
-        <a class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/8801732081284?text=Hi%2C%20I%27m%20interested%20in%20booking%20a%20campus%20visit%20for%20my%20child%20at%20AISD." onclick="trackCta('whatsapp','hero')">
+        <a class="btn btn-whatsapp" href="#" onclick="trackCta('book_visit','hero'); openInquiryModal('hero'); return false;">
+          Book a Campus Visit
+        </a>
+        <a class="btn" style="background:transparent; border:1px solid var(--whatsapp); color:var(--whatsapp);" target="_blank" rel="noopener" href="https://wa.me/8801732081284?text=Hi%2C%20I%27m%20interested%20in%20booking%20a%20campus%20visit%20for%20my%20child%20at%20AISD." onclick="trackCta('whatsapp','hero')">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.5.8-.6.9-.2.2-.4.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4c0-.1-.5-1.3-.7-1.8s-.4-.4-.5-.4h-.4a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2 4.6 4.6 0 0 0 1 2.5 10.6 10.6 0 0 0 4.5 4c.6.3 1.1.4 1.5.5a3.6 3.6 0 0 0 1.6.1 2.7 2.7 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3z"/></svg>
           Chat on WhatsApp
         </a>
       </div>
-      <p style="font-size:13px; color:var(--muted); margin-top:10px;">Tap to message our admissions team directly — usually replies within minutes.</p>
     </div>
     <div class="hero-visual">
       <div class="hero-art">
@@ -698,8 +701,14 @@
     </div>
 
     <div id="whatsapp-panel">
-      <h3>Message Us on WhatsApp</h3>
-      <p style="font-size:14.5px; color:var(--ink-soft);">This is the fastest way to reach admissions — tell us your child's age and a good time to visit, and we'll take it from there.</p>
+      <h3>Book Your Campus Visit</h3>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Complete this short form and our Admissions Team will contact you shortly to arrange your campus visit — or message us directly on WhatsApp.</p>
+
+      <div class="form-card" style="text-align:center;">
+        <button type="button" class="btn btn-whatsapp" style="width:100%; border:none; cursor:pointer;" onclick="trackCta('book_visit','contact-panel'); openInquiryModal('contact-panel');">Book a Campus Visit</button>
+      </div>
+
+      <p style="text-align:center; font-size:13.5px; color:var(--ink-soft); margin:18px 0 10px;">— or —</p>
 
       <div class="form-card" style="text-align:center;">
         <div style="width:64px; height:64px; border-radius:50%; background:var(--whatsapp); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
@@ -751,6 +760,35 @@
   <a class="call" href="tel:+8801720828821" onclick="trackCta('call','sticky-mobile')">Call</a>
 </div>
 
+<!-- ================= CAMPUS VISIT INQUIRY MODAL (shared by Hero + Contact CTAs) =================
+     Hidden by default (display:none). Opened only via openInquiryModal(), never on page load. -->
+<div id="inquiry-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(20,20,20,0.55); z-index:1000; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this) closeInquiryModal();">
+  <div style="background:#FBF6EC; border-radius:14px; max-width:440px; width:100%; max-height:90vh; overflow-y:auto; padding:26px; position:relative;">
+    <button type="button" aria-label="Close" onclick="closeInquiryModal()" style="position:absolute; top:14px; right:14px; background:none; border:none; font-size:22px; line-height:1; cursor:pointer; color:#555; padding:4px 8px;">&times;</button>
+
+    <p style="font-weight:700; margin-bottom:4px; font-size:18px; padding-right:24px;">Book Your Campus Visit</p>
+    <p style="font-size:13.5px; color:var(--muted); margin-bottom:16px;">Complete this short form and our Admissions Team will contact you shortly to arrange your campus visit.</p>
+
+    <form class="admission-inquiry-form" onsubmit="submitInquiryForm(event)">
+      <input type="text" name="parentName" required placeholder="Parent's Name *" style="width:100%; padding:10px 12px; margin-bottom:10px; border:1px solid #D9D2C5; border-radius:8px; font-size:14px;">
+      <input type="tel" name="mobile" required placeholder="Mobile Number *" style="width:100%; padding:10px 12px; margin-bottom:10px; border:1px solid #D9D2C5; border-radius:8px; font-size:14px;">
+      <input type="text" name="studentName" required placeholder="Student's Name *" style="width:100%; padding:10px 12px; margin-bottom:10px; border:1px solid #D9D2C5; border-radius:8px; font-size:14px;">
+      <select name="studentClass" required style="width:100%; padding:10px 12px; margin-bottom:16px; border:1px solid #D9D2C5; border-radius:8px; font-size:14px; color:#555;">
+        <option value="">Student's Class *</option>
+        <option value="Nursery">Nursery (Ages 3-4)</option>
+        <option value="KG">KG (Ages 4-5)</option>
+        <option value="Grade 1">Grade 1</option>
+        <option value="Grade 2">Grade 2</option>
+        <option value="Grade 3">Grade 3</option>
+        <option value="Grade 4">Grade 4</option>
+        <option value="Grade 5">Grade 5</option>
+      </select>
+      <button type="submit" class="btn btn-whatsapp" style="width:100%; border:none; cursor:pointer;">Reserve My Campus Visit</button>
+      <p class="inquiry-form-status" style="margin-top:10px; font-size:13.5px;"></p>
+    </form>
+  </div>
+</div>
+
 <script>
   // ---- Drop-in photo helper: every real <img> on this page (logo, principal,
   // hero/about/gallery classroom shots) points to a file under assets/ that
@@ -787,25 +825,119 @@
     });
   })();
 
-  // ---- Tracking: wire up to your real GA4 + Meta Pixel IDs before launch.
-  // WhatsApp click is the single goal of this page, so it's the only event mapped
-  // to GA4 'generate_lead' and Meta's standard 'Lead' event.
+  // ---- Campus Visit Inquiry Modal: opened only by an explicit CTA click
+  // (openInquiryModal), never on page load. Tracking note: opening/closing
+  // this modal must NOT fire the Meta 'Lead' event — only a successful form
+  // submission does that (see submitInquiryForm()).
+  function openInquiryModal(location){
+    var overlay = document.getElementById('inquiry-modal-overlay');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    overlay.setAttribute('data-opened-from', location || '');
+  }
+  function closeInquiryModal(){
+    var overlay = document.getElementById('inquiry-modal-overlay');
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      var overlay = document.getElementById('inquiry-modal-overlay');
+      if(overlay && overlay.style.display === 'flex') closeInquiryModal();
+    }
+  });
+
+  // ---- Tracking: FIXED so the Meta 'Lead' event and GA4 'generate_lead' fire
+  // ONLY after a real Admission Inquiry Form submission (see submitInquiryForm()
+  // below) — never on a WhatsApp click, Call click, or any other CTA click.
+  // WhatsApp/Call clicks are still tracked, but as 'Contact', not 'Lead', so
+  // Ads Manager's Lead count reflects real inquiries only.
   function trackCta(ctaType, location){
     try{
       if(typeof gtag === 'function'){
         gtag('event', 'cta_click', { cta_type: ctaType, cta_location: location });
-        if(ctaType === 'whatsapp') gtag('event', 'generate_lead', { method: 'whatsapp', cta_location: location });
       }
       if(typeof fbq === 'function'){
         if(ctaType === 'whatsapp'){
           fbq('trackCustom', 'WhatsApp_Click', { location: location });
-          // Standard 'Lead' event — the one Ads Manager uses to optimize a
-          // Leads-objective campaign driving to this page.
-          fbq('track', 'Lead', { content_name: 'whatsapp_click', location: location });
+          fbq('track', 'Contact', { content_name: 'whatsapp_click', location: location });
         }
-        if(ctaType === 'call') fbq('trackCustom', 'Call_Click', { location: location });
+        if(ctaType === 'call'){
+          fbq('trackCustom', 'Call_Click', { location: location });
+          fbq('track', 'Contact', { content_name: 'call_click', location: location });
+        }
       }
     }catch(e){ /* tracking should never block the click */ }
+  }
+
+  // ---- Admission Inquiry Form submission handler.
+  // Fires the Meta 'Lead' event and GA4 'generate_lead' ONLY after the form
+  // data has been successfully sent — this is the sole trigger for 'Lead' now.
+  //
+  // SETUP REQUIRED BEFORE THIS WORKS: replace SCRIPT_URL below with your own
+  // Google Apps Script Web App URL bound to a Google Sheet. Steps:
+  //   1. Create/open a Google Sheet (e.g. "AISD Admission Inquiries").
+  //   2. Extensions > Apps Script, paste a doPost(e) function that appends
+  //      e.parameter fields as a new row, then Deploy > Web app (access: Anyone).
+  //   3. Copy the deployed /exec URL and paste it below.
+  var INQUIRY_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+  function submitInquiryForm(event){
+    event.preventDefault();
+    var form = event.target;
+    var statusEl = form.querySelector('.inquiry-form-status');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var data = {
+      parentName: form.parentName.value.trim(),
+      mobile: form.mobile.value.trim(),
+      studentName: form.studentName.value.trim(),
+      studentClass: form.studentClass.value
+    };
+
+    if(!data.parentName || !data.mobile || !data.studentName || !data.studentClass){
+      statusEl.textContent = "Please fill in all required fields.";
+      statusEl.style.color = "#B3261E";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+    function onSuccess(){
+      // ---- THIS is the only place the Lead event should fire ----
+      // Requirement: data must already be stored (fetch resolved OK) before this runs.
+      if(typeof fbq === 'function'){
+        fbq('track', 'Lead', { content_name: 'admission_inquiry_form', student_class: data.studentClass });
+      }
+      if(typeof gtag === 'function'){
+        gtag('event', 'generate_lead', { method: 'form', student_class: data.studentClass });
+      }
+      form.style.display = 'none';
+      statusEl.style.color = "#2F5D50";
+      statusEl.innerHTML = "Thank you for your interest in Amina International School Dhaka.<br><br>We have received your request successfully.<br><br>Our Admissions Team will contact you shortly to confirm your campus visit.";
+    }
+
+    function onError(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Reserve My Campus Visit";
+      statusEl.style.color = "#B3261E";
+      statusEl.innerHTML = "Something went wrong. Please try again, or message us directly on WhatsApp.";
+    }
+
+    if(INQUIRY_SCRIPT_URL.indexOf('PASTE_YOUR') === 0){
+      // Placeholder not yet replaced — do not silently fire Lead. Tell the admin.
+      onError();
+      statusEl.innerHTML = "Form is not connected to a submission endpoint yet (INQUIRY_SCRIPT_URL placeholder). Contact your developer.";
+      return;
+    }
+
+    fetch(INQUIRY_SCRIPT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(data).toString()
+    })
+    .then(function(res){ if(res.ok){ onSuccess(); } else { onError(); } })
+    .catch(onError);
   }
 </script>
 
@@ -814,8 +946,22 @@
   BEFORE LAUNCH — replace/confirm these:
   1. GA4 is ACTIVE (Measurement ID G-X86YZELJRW).
      Meta Pixel is ACTIVE (Pixel ID 1315244547004326).
-     Both fire on page load; WhatsApp clicks additionally fire GA4's
-     'generate_lead' and Meta's standard 'Lead' event (see trackCta() in the JS).
+     Both fire on page load (PageView). WhatsApp/Call clicks fire a 'Contact'
+     event only (see trackCta() in the JS) — they NO LONGER fire 'Lead' or
+     'generate_lead'. The Meta 'Lead' event and GA4 'generate_lead' now fire
+     ONLY inside submitInquiryForm(), after a successful Admission Inquiry
+     Form submission. This was a deliberate fix (16 July 2026) for a bug where
+     every WhatsApp/Call click was being counted as a Lead in Ads Manager.
+  1a. REQUIRED SETUP before the form works: open submitInquiryForm() in the
+      JS and replace INQUIRY_SCRIPT_URL (currently a placeholder) with a
+      Google Apps Script Web App URL bound to a Google Sheet:
+        - Open/create a Sheet, Extensions > Apps Script
+        - Paste a doPost(e) function that appends e.parameter fields as a row
+        - Deploy > New deployment > Web app > Execute as: Me,
+          Who has access: Anyone > Deploy > copy the /exec URL
+        - Paste that URL into INQUIRY_SCRIPT_URL in this file
+      Until this URL is set, the form will show an error instead of silently
+      firing a fake Lead — this is intentional so bad data is never recorded.
   2. Photos are now all in place (logo, campus entrance, hero, about, principal,
      and 4 campus-life gallery shots) — nothing further needed here.
   3. Principal's welcome quote (Amina Begum Mina) and the 3rd testimonial
@@ -836,25 +982,31 @@
   6. Remove <meta name="robots" content="noindex, nofollow"> only if you want
      this page indexed by Google — recommended to leave it in for an ads-only page.
 
-  ABOUT THE Ads Manager → Landing Page → WhatsApp → Lead FUNNEL:
-  This page now has exactly ONE conversion goal: a WhatsApp click. The lead
-  form has been removed entirely — every CTA (hero, admissions banner, contact
-  panel, final CTA, mobile sticky bar) opens the same WhatsApp chat.
-  - Ad-attribution: since there's no form to carry UTM data anymore, the page's
-    script stamps "(via utm_source/utm_campaign)" onto the end of the pre-filled
-    WhatsApp message itself, so your admissions staff can see which ad a chat
-    came from directly inside the WhatsApp conversation.
-  - Important accuracy note (this is a genuine limit, not a guess): the Meta
-    Pixel "Lead" event fires on WhatsApp BUTTON CLICK, not on a completed
-    conversation — a click doesn't guarantee the parent actually sent a message.
-    For real chat-start data and better Ads Manager optimization, set up Meta's
-    actual "Click-to-WhatsApp" ad objective with the Conversions API + WhatsApp
-    Business Platform integration. That's a Meta Business Suite / WhatsApp
-    Business API configuration task — this static HTML page can't do it alone.
-  - Until that's set up, ask your admissions team to log every WhatsApp
-    conversation that turns into a real visit/enrollment in one sheet — that
-    manual log is currently your most reliable "true lead" count, more
-    reliable than pixel click data by itself.
+  ABOUT THE Ads Manager → Landing Page → Form/WhatsApp → Lead FUNNEL (FIXED):
+  This page now has TWO conversion paths:
+    1. Admission Inquiry Form ("Book a Campus Visit") — this is the ONLY
+       trigger for Meta's standard 'Lead' event and GA4's 'generate_lead'.
+       A successful submission captures Parent's Name, Mobile, Student's
+       Name, Class, and optional visit date into your Google Sheet.
+    2. WhatsApp / Call buttons — still present for people who prefer to chat
+       directly, but these now fire a 'Contact' event, NOT 'Lead'. They will
+       no longer inflate the Ads Manager "Leads" metric.
+  - Why this changed (16 July 2026): the previous version fired 'Lead' on
+    every WhatsApp click with no form, which reported ~29 "leads" against
+    only 1 real WhatsApp inquiry over the same period — Ads Manager was
+    counting clicks, not actual prospective parents.
+  - Ad-attribution: the UTM-to-WhatsApp-message stamping script (further up
+    in this file) still runs for anyone who uses the WhatsApp buttons, so
+    those conversations are still traceable to a campaign/source.
+  - Ask your admissions team to still log every WhatsApp conversation and
+    every form submission's follow-up outcome in one tracker — the form
+    gives you contact details up front, but visit/enrollment status still
+    needs manual follow-up logging.
+  - Recommended next step in Ads Manager: once the form has been live for a
+    few days and is producing real leads, consider switching the Facebook
+    Ads campaign's conversion event to this new 'Lead' event (Events Manager
+    → Test Events, confirm it fires correctly first) so the campaign
+    optimizes toward real inquiries instead of raw clicks.
   ============================================================
 -->
 </body>
