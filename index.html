@@ -784,8 +784,8 @@
         <option value="Grade 5">Grade 5</option>
       </select>
       <button type="submit" class="btn btn-whatsapp" style="width:100%; border:none; cursor:pointer;">Reserve My Campus Visit</button>
-      <p class="inquiry-form-status" style="margin-top:10px; font-size:13.5px;"></p>
     </form>
+    <p class="inquiry-form-status" style="margin-top:10px; font-size:13.5px;"></p>
   </div>
 </div>
 
@@ -885,16 +885,16 @@
   function submitInquiryForm(event){
     event.preventDefault();
     var form = event.target;
-    var statusEl = form.querySelector('.inquiry-form-status');
+    var statusEl = form.parentElement.querySelector('.inquiry-form-status');
     var submitBtn = form.querySelector('button[type="submit"]');
     var data = {
       parentName: form.parentName.value.trim(),
-      mobile: form.mobile.value.trim(),
+      mobileNumber: form.mobile.value.trim(),
       studentName: form.studentName.value.trim(),
       studentClass: form.studentClass.value
     };
 
-    if(!data.parentName || !data.mobile || !data.studentName || !data.studentClass){
+    if(!data.parentName || !data.mobileNumber || !data.studentName || !data.studentClass){
       statusEl.textContent = "Please fill in all required fields.";
       statusEl.style.color = "#B3261E";
       return;
