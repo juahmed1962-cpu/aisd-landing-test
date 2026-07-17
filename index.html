@@ -933,11 +933,22 @@
 
     fetch(INQUIRY_SCRIPT_URL, {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams(data).toString()
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(data)
     })
-    .then(function(res){ if(res.ok){ onSuccess(); } else { onError(); } })
-    .catch(onError);
+    .then(function(res){ return res.text().then(function(txt){ return {ok: res.ok, status: res.status, txt: txt}; }); })
+    .then(function(r){
+      console.log('DEBUG Apps Script response:', r.status, r.txt);
+      if(r.ok){ onSuccess(); } else {
+        if(statusEl){ statusEl.style.color='red'; statusEl.innerText = 'DEBUG ERROR (status '+r.status+'): ' + r.txt; }
+        onError();
+      }
+    })
+    .catch(function(err){
+      console.log('DEBUG fetch failed:', err);
+      if(statusEl){ statusEl.style.color='red'; statusEl.innerText = 'DEBUG NETWORK ERROR: ' + err; }
+      onError();
+    });
   }
 </script>
 
